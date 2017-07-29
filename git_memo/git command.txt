@@ -1,0 +1,32 @@
+//*本地仓库提交
+git status
+git add *.*
+git commit -a -m "memo"
+
+//*从远端仓库提取数据并尝试合并到当前分支
+git clone [url]         //会使用默认的名字 origin
+git fetch [remote-name] //添加一个远程仓库
+git pull                //克隆服务器上的数据并尝试合并到当前分支
+
+//*远程仓库-remote
+git remote add [remote-name] [url] //增加一个远程仓库
+git remote show [remote-name]      //查看远程仓库
+git remote -v                      //显示可以操作的远程仓库
+
+//*分支管理-branch
+git branch [branch-name]
+git branch -a                //查看所有分支
+git branch -b [branch-name]  //创建并移动当前分支
+git branch -d [branch-name]  //删除该分支
+git branch --merged          //查看merged到该分支的其他分支信息
+git branch --no-merged       //查看还没有merged到该分支的其他分支信息
+//**切换/创建/删除分支
+git checkout [branch-name]   //切换分支
+git checkout -b branch-name origin/branch-name
+                             //切换/创建并同步远程仓库分支
+//**合并分支-master
+git merge maiaoa/master      //将远程分支合并到当前分支
+
+//*提交到远程分支-push
+git push origin master          //push到远程分支
+git push origin --delete Qubooo //删除远程分支
