@@ -1,0 +1,144 @@
+<%@ Page Title="主页" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="_Default" %>
+
+<asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1><%: Title %>.</h1>
+                <h2>修改此模板以快速开始创建 ASP.NET 应用程序。</h2>
+            </hgroup>
+            <p>
+                若要了解有关 ASP.NET 的详细信息，请访问 <a href="http://asp.net" title="ASP.NET Website">http://asp.net</a>。
+                该页提供 <mark>视频、教程和示例</mark> 以帮助你充分利用 
+ASP.NET。如果你对 ASP.NET 有任何疑问，请访问
+                <a href="http://forums.asp.net/18.aspx" title="ASP.NET Forum">我们的论坛</a>。
+            </p>
+        </div>
+    </section>
+</asp:Content>
+
+<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
+    <style type="text/css">
+        .div1 {
+            border-style: solid solid solid solid;
+        }
+    </style>
+
+    <div id="div1" class="div1" style="width: 600px; height: 600px;">
+        <canvas id="canvas_1" width="600" height="600"></canvas>
+    </div>
+    <input type="text" id="text1" />
+    <input type="button" onclick="btn1()" value="button_1" /><br />
+    <input type="text" id="text2" />
+    <input type="button" onclick="btn2()" value="button_2" /><br />
+    <input type="text" id="text3" />
+    <input type="button" onclick="btn3()" value="button_3" /><br />
+    
+    <script src="./js/dist/fabric.js" type="text/javascript" ></script>
+    <script type="text/javascript">
+        var text1 = document.getElementById("text1");
+        var text2 = document.getElementById("text2");
+        var text3 = document.getElementById("text3");
+        var canvas;
+
+        function handler() {
+            alert(111);
+        }
+        window.onload=function(){
+
+            canvas = new fabric.Canvas('canvas_1');
+
+            canvas.on('object:selected', function (eventName, handler) {
+                var objs = canvas.getActiveObjects();
+                var obj = canvas.getActiveObject();
+                text1.value = obj.type;
+            });
+
+            //var italicText = new fabric.Text("A very fancy italic text", {
+            //    fontStyle: 'italic',
+            //    fontFamily: 'Delicious'
+            //});
+            //var tttText = new fabric.Text("A tttt bbbb \r\n cccc text", {
+            //    top: 60,
+            //    left: 20,
+            //    textAlign: 'right',
+            //    fontStyle: 'italic',
+            //    fontFamily: 'Delicious',
+            //    stroke: '#ff1318',
+            //    strokeWidth: 2,
+            //    lineHeight: 1,
+            //    textBackgroundColor: 'rgb(0,200,0)'
+            //});
+            // create a rectangle with angle=45
+            var rect = new fabric.Rect({
+              left: 100,
+              top: 100,
+              fill: 'RGB(100,100,200)',
+              width: 140,
+              height: 180
+            });
+            fabric.Image.fromURL('./img/german-flag-map.jpg', function (oImg) {
+                // scale image down, and flip it, before adding it onto canvas
+                oImg.set({
+                    left: rect.left,
+                    top: rect.top,
+                    globalCompositeOperation: 'source-atop'
+                });
+                //canvas.add(oImg);
+                var group = new fabric.Group([rect, oImg], {
+                    left: 150,
+                    top: 100
+                });
+                canvas.add(group);
+                canvas.renderAll();
+            });
+
+            fabric.Image.fromURL('./img/german-flag-map.jpg', function (oImg) {
+                // scale image down, and flip it, before adding it onto canvas
+                oImg.set({
+                    left: 60,
+                    top: 80,
+                    scaleX: 1,
+                    scaleY: 1
+                });
+                //oImg.scaleToWidth(80,true);
+                oImg.scaleX = 140/oImg.width;
+                oImg.scaleY = 180/oImg.width;
+                canvas.add(oImg);
+                canvas.renderAll();
+            });
+            //canvas.add(rect);
+            //canvas.add(italicText);
+            //canvas.add(tttText);
+        }
+
+        function btn1() {
+            var str;
+
+            var rect = canvas.item(0);
+
+            var obj = canvas.getActiveObject();
+            if (obj && obj.type === "group") {
+                obj.item(1).set({
+                    top: obj.item(1).top-10,
+                    left: obj.item(1).left-10
+                });
+                canvas.renderAll();
+                //obj.remove(obj.item(0));
+                str = obj.item(0).width;
+            }
+            text1.value = str;
+
+            //canvas.item(0).selectable = false;
+        }
+
+        function btn2() {
+            canvas.remove(rect);
+        }
+
+        function btn3() {
+            canvas.bringToFront(canvas.item(0));
+        }
+    </script>
+
+</asp:Content>
